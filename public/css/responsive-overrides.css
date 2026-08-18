@@ -1,0 +1,43 @@
+/* Responsive Overrides */
+
+/* Mobile (< 768px) */
+@media (max-width: 767.98px) {
+    .ds-stat-card {
+        margin-bottom: 1rem;
+    }
+    
+    .content-header h1 {
+        font-size: 1.1rem !important;
+        text-align: center;
+    }
+
+    .ds-pos-btn {
+        padding: 0.25rem 0.75rem !important;
+        font-size: 0.85rem !important;
+    }
+
+    table.dataTable tbody td, table.dataTable thead th {
+        font-size: 0.85rem;
+    }
+
+    .card-body {
+        padding: 1rem !important;
+    }
+}
+
+/* Tablet (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .ds-stat-card .info-box-icon {
+        width: 45px !important;
+        height: 45px !important;
+        font-size: 1.2rem !important;
+    }
+    
+    .ds-stat-card .info-box-number {
+        font-size: 1.25rem !important;
+    }
+    
+    table.dataTable {
+        font-size: 0.9rem;
+    }
+}
