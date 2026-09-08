@@ -45,10 +45,11 @@
                 <div class="dropdown-divider"></div>
                 
                 <?php $__empty_1 = true; $__currentLoopData = $unreadNotifications->take(5); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
-                <a href="<?php echo e(route('backend.admin.notifications.read', $notification->id)); ?>" class="dropdown-item">
-                    <i class="fas fa-shopping-cart mr-2"></i> <?php echo e($notification->data['message'] ?? 'New Notification'); ?>
-
-                    <span class="float-right text-muted text-sm"><?php echo e($notification->created_at->diffForHumans()); ?></span>
+                <a href="<?php echo e(route('backend.admin.notifications.read', $notification->id)); ?>" class="dropdown-item" style="white-space: normal; min-width: 300px;">
+                    <div class="d-flex w-100 justify-content-between align-items-start">
+                        <span><i class="fas fa-shopping-cart mr-2 mt-1"></i> <?php echo e($notification->data['message'] ?? 'New Notification'); ?></span>
+                        <span class="text-muted text-sm ml-3" style="white-space: nowrap;"><?php echo e($notification->created_at->diffForHumans()); ?></span>
+                    </div>
                 </a>
                 <div class="dropdown-divider"></div>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
@@ -58,7 +59,8 @@
                 <div class="dropdown-divider"></div>
                 <?php endif; ?>
                 
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                <a href="<?php echo e(route('backend.admin.notifications.index')); ?>" class="dropdown-item dropdown-footer text-center">See All Notifications</a>
+                <a href="<?php echo e(route('backend.admin.notifications.markAllAsRead')); ?>" class="dropdown-item dropdown-footer text-primary font-weight-bold text-center border-top">Mark All as Read</a>
             </div>
         </li>
 

@@ -125,4 +125,16 @@ class DashboardController extends Controller
         
         return redirect()->back();
     }
+
+    public function markAllNotificationsAsRead()
+    {
+        auth()->user()->unreadNotifications->markAsRead();
+        return redirect()->back()->with('success', 'All notifications marked as read.');
+    }
+
+    public function notifications()
+    {
+        $notifications = auth()->user()->notifications()->paginate(20);
+        return view('backend.notifications.index', compact('notifications'));
+    }
 }

@@ -49,9 +49,11 @@
                 <div class="dropdown-divider"></div>
                 
                 @forelse($unreadNotifications->take(5) as $notification)
-                <a href="{{ route('backend.admin.notifications.read', $notification->id) }}" class="dropdown-item">
-                    <i class="fas fa-shopping-cart mr-2"></i> {{ $notification->data['message'] ?? 'New Notification' }}
-                    <span class="float-right text-muted text-sm">{{ $notification->created_at->diffForHumans() }}</span>
+                <a href="{{ route('backend.admin.notifications.read', $notification->id) }}" class="dropdown-item" style="white-space: normal; min-width: 300px;">
+                    <div class="d-flex w-100 justify-content-between align-items-start">
+                        <span><i class="fas fa-shopping-cart mr-2 mt-1"></i> {{ $notification->data['message'] ?? 'New Notification' }}</span>
+                        <span class="text-muted text-sm ml-3" style="white-space: nowrap;">{{ $notification->created_at->diffForHumans() }}</span>
+                    </div>
                 </a>
                 <div class="dropdown-divider"></div>
                 @empty
@@ -61,7 +63,8 @@
                 <div class="dropdown-divider"></div>
                 @endforelse
                 
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                <a href="{{ route('backend.admin.notifications.index') }}" class="dropdown-item dropdown-footer text-center">See All Notifications</a>
+                <a href="{{ route('backend.admin.notifications.markAllAsRead') }}" class="dropdown-item dropdown-footer text-primary font-weight-bold text-center border-top">Mark All as Read</a>
             </div>
         </li>
 

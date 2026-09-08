@@ -38,8 +38,19 @@ use App\Models\Supplier;
 
 // homepage
 Route::get('/', function () {
-    return to_route('login');
+    return view('frontend.home');
 })->name('frontend.home');
+
+Route::post('/contact-submit', function (\Illuminate\Http\Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:100',
+        'email' => 'required|email|max:150',
+        'phone' => 'nullable|string|max:30',
+        'business_type' => 'nullable|string|max:50',
+        'message' => 'required|string|max:2000'
+    ]);
+    return back()->with('contact_success', 'Thank you for reaching out! Our POS specialist team has received your message and will contact you shortly.');
+})->name('frontend.contact.submit');
 
 //authentication
 Route::match(['get', 'post'], 'login', [AuthController::class, 'login'])->name('login');
@@ -100,6 +111,8 @@ Route::prefix('admin')->as('backend.admin.')->middleware(['admin'])->group(funct
     //end pos
     Route::get('profile', [DashboardController::class, 'profile'])->name('profile');
     Route::post('profile/update', [AuthController::class, 'update'])->name('profile.update');
+    Route::get('notifications', [DashboardController::class, 'notifications'])->name('notifications.index');
+    Route::get('notifications/mark-all-read', [DashboardController::class, 'markAllNotificationsAsRead'])->name('notifications.markAllAsRead');
     Route::get('notifications/{id}/read', [DashboardController::class, 'markNotificationAsRead'])->name('notifications.read');
 
     // user management

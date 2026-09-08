@@ -109,10 +109,9 @@
                     
                     <!-- Demo Credentials Info -->
                     <div class="p-3 mb-4 rounded" style="background-color: #F8FAFC; border: 1px dashed #CBD5E1;">
-                        <p class="mb-1" style="font-size: 13px;"><b>Admin:</b> demo@stradig.tech</p>
-                        <p class="mb-1" style="font-size: 13px;"><b>Cashier:</b> cashier@gmail.com</p>
-                        <p class="mb-1" style="font-size: 13px;"><b>Sales:</b> sales@gmail.com</p>
-                        <p class="mb-0" style="font-size: 13px;"><b>Password:</b> SDT12345 (for all)</p>
+                        <p class="mb-1" style="font-size: 13px;"><b>Admin:</b> demo@stradigtech.net <i>(Pass: 87654321)</i></p>
+                        <p class="mb-1" style="font-size: 13px;"><b>Cashier:</b> cashier@gmail.com <i>(Pass: 12345678)</i></p>
+                        <p class="mb-1" style="font-size: 13px;"><b>Sales:</b> sales@gmail.com <i>(Pass: 12345678)</i></p>
                     </div>
 
                 </form>
