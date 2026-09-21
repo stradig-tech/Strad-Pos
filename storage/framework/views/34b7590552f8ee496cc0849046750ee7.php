@@ -78,24 +78,39 @@
                 </div>
             </div>
         </div>
-    </nav>
 
-    <!-- Mobile Dropdown Menu -->
-    <div id="spMobileMenu" style="display: none; background: #ffffff; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: fixed; top: 70px; left: 0; right: 0; z-index: 999;">
-        <ul style="list-style: none; padding: 0; margin: 0 0 15px 0;">
-            <li class="py-2"><a href="#home" class="text-dark fw-bold text-decoration-none">Home</a></li>
-            <li class="py-2"><a href="#features" class="text-dark fw-bold text-decoration-none">Features</a></li>
-            <li class="py-2"><a href="#showcase" class="text-dark fw-bold text-decoration-none">Screenshots</a></li>
-            <li class="py-2"><a href="#solutions" class="text-dark fw-bold text-decoration-none">Industries</a></li>
-            <li class="py-2"><a href="#hardware" class="text-dark fw-bold text-decoration-none">Hardware</a></li>
-            <li class="py-2"><a href="#why-us" class="text-dark fw-bold text-decoration-none">Why StradPos</a></li>
-            <li class="py-2"><a href="#contact" class="text-dark fw-bold text-decoration-none">Contact</a></li>
-        </ul>
-        <div class="d-flex gap-2">
-            <a href="<?php echo e(route('login')); ?>" class="btn btn-outline-primary w-50">Sign In</a>
-            <a href="<?php echo e(route('signup')); ?>" class="btn btn-primary w-50">Sign Up</a>
+        <!-- Mobile Navigation Dropdown Menu -->
+        <div class="sp-mobile-menu" id="spMobileMenu">
+            <div class="container">
+                <ul class="sp-mobile-nav-links">
+                    <li><a href="#home" class="sp-mobile-nav-link"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#features" class="sp-mobile-nav-link"><i class="fas fa-layer-group"></i> Features</a></li>
+                    <li><a href="#showcase" class="sp-mobile-nav-link"><i class="fas fa-laptop-code"></i> Screenshots</a></li>
+                    <li><a href="#solutions" class="sp-mobile-nav-link"><i class="fas fa-store"></i> Industries</a></li>
+                    <li><a href="#hardware" class="sp-mobile-nav-link"><i class="fas fa-cash-register"></i> Hardware</a></li>
+                    <li><a href="#why-us" class="sp-mobile-nav-link"><i class="fas fa-shield-halved"></i> Why StradPos</a></li>
+                    <li><a href="#contact" class="sp-mobile-nav-link"><i class="fas fa-envelope"></i> Contact</a></li>
+                </ul>
+                <div class="sp-mobile-nav-actions">
+                    <?php if(auth()->guard()->check()): ?>
+                        <a href="<?php echo e(route('backend.admin.dashboard')); ?>" class="sp-btn-mobile-cta">
+                            <i class="fas fa-gauge-high me-1"></i> Dashboard
+                        </a>
+                        <a href="<?php echo e(route('logout')); ?>" class="sp-btn-mobile-login">
+                            <i class="fas fa-arrow-right-from-bracket me-1"></i> Logout
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo e(route('login')); ?>" class="sp-btn-mobile-login">
+                            <i class="fas fa-user-circle me-1"></i> Sign In
+                        </a>
+                        <a href="<?php echo e(route('signup')); ?>" class="sp-btn-mobile-cta">
+                            <i class="fas fa-rocket me-1"></i> Get Started Free
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
-    </div>
+    </nav>
 
     <!-- ======================================================================
          HERO SECTION
@@ -1091,16 +1106,45 @@
         // Mobile Menu Toggle
         const mobileToggle = document.getElementById('spMobileToggle');
         const mobileMenu = document.getElementById('spMobileMenu');
+        const toggleIcon = mobileToggle ? mobileToggle.querySelector('i') : null;
+
         if (mobileToggle && mobileMenu) {
-            mobileToggle.addEventListener('click', () => {
-                const isShown = mobileMenu.style.display === 'block';
-                mobileMenu.style.display = isShown ? 'none' : 'block';
+            const toggleMenu = (forceState) => {
+                const willShow = typeof forceState === 'boolean' ? forceState : !mobileMenu.classList.contains('active');
+                if (willShow) {
+                    mobileMenu.classList.add('active');
+                    navbar.classList.add('menu-open');
+                    if (toggleIcon) {
+                        toggleIcon.classList.remove('fa-bars');
+                        toggleIcon.classList.add('fa-xmark');
+                    }
+                } else {
+                    mobileMenu.classList.remove('active');
+                    navbar.classList.remove('menu-open');
+                    if (toggleIcon) {
+                        toggleIcon.classList.remove('fa-xmark');
+                        toggleIcon.classList.add('fa-bars');
+                    }
+                }
+            };
+
+            mobileToggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleMenu();
             });
+
             // Close mobile menu on anchor click
             mobileMenu.querySelectorAll('a').forEach(anchor => {
                 anchor.addEventListener('click', () => {
-                    mobileMenu.style.display = 'none';
+                    toggleMenu(false);
                 });
+            });
+
+            // Close when clicking outside navbar/menu
+            document.addEventListener('click', (e) => {
+                if (!navbar.contains(e.target)) {
+                    toggleMenu(false);
+                }
             });
         }
 
